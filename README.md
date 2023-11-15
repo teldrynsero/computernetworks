@@ -1,4 +1,4 @@
-# computer networks final project
+# Computer Networks Final Project
 Click [here](https://docs.google.com/presentation/d/1eAYlhBzkZTYqPcSjvtXfGA_8Tox8LZfnNQafnGsdlS0/edit?usp=sharing) to see the Google Slides presentation.
 
 ## Set Up 
