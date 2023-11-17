@@ -3,12 +3,16 @@ from network import Network
 import pickle
 pygame.font.init()
 
+# CLIENT: Using Pygame, create graphical interface
+# for the actual rock-papper-scissors game.
+
+# Set up Pygame window appearance
 width = 700
 height = 700
 win = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Rock Paper Scissors")
 
-
+# Appearance of buttons
 class Button:
     def __init__(self, text, x, y, color):
         self.text = text
@@ -32,15 +36,16 @@ class Button:
         else:
             return False
 
-
+# Draws window depending on different game states
 def redrawWindow(win, game, p):
     win.fill((250,229,212))
 
+    # Waiting on another player to connect
     if not(game.connected()):
         font = pygame.font.SysFont("georgia", 60)
         text = font.render("Waiting for opponent...", 1, (121,173,29))
         win.blit(text, (50,200))
-    else:
+    else: # 2 players connected, ready to play
         font = pygame.font.SysFont("georgia", 60)
         text = font.render("You", 1, (35,186,196))
         win.blit(text, (80, 200))
@@ -57,14 +62,14 @@ def redrawWindow(win, game, p):
             if game.p1Went and p == 0:
                 text1 = font.render(move1, 1, (79,184,157))
             elif game.p1Went:
-                text1 = font.render("Locked In", 1, (79,184,157))
+                text1 = font.render("Move made", 1, (79,184,157))
             else:
                 text1 = font.render("Waiting...", 1, (79,184,157))
 
             if game.p2Went and p == 1:
                 text2 = font.render(move2, 1, (79,184,157))
             elif game.p2Went:
-                text2 = font.render("Locked In", 1, (79,184,157))
+                text2 = font.render("Move made", 1, (79,184,157))
             else:
                 text2 = font.render("Waiting...", 1, (79,184,157))
 
@@ -80,8 +85,11 @@ def redrawWindow(win, game, p):
 
     pygame.display.update()
 
-
+# Make the buttons for each move option
 btns = [Button("Rock", 50, 500, (115,197,222)), Button("Scissors", 250, 500, (232,175,70)), Button("Paper", 450, 500, (235,117,207))]
+
+# Client communicates with server to update game state
+# using player ID and play input
 def main():
     run = True
     clock = pygame.time.Clock()
@@ -138,6 +146,7 @@ def main():
 
         redrawWindow(win, game, player)
 
+# Main menu, what players see first when game opened
 def menu_screen():
     run = True
     clock = pygame.time.Clock()
@@ -159,5 +168,6 @@ def menu_screen():
 
     main()
 
+# Keep displaying menu screen until clicked
 while True:
     menu_screen()
