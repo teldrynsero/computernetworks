@@ -65,6 +65,13 @@ class Game:
         elif p1 == "P" and p2 == "S":
             winner = 1
 
+        if winner == 0:
+            self.wins[0] += 1
+        elif winner == 1:
+            self.wins[1] += 1
+        elif winner == -1:
+            self.ties += 1
+
         return winner
 
     # Start new game

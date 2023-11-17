@@ -77,7 +77,7 @@ while True:
 
     idCount += 1 # New player connected
     p = 0
-    # Is player 0 or 1?
+    # Is player 1 or 2?
     gameId = (idCount - 1)//2
     # Player 0: Start new game
     if idCount % 2 == 1:

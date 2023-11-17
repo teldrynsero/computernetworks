@@ -38,6 +38,7 @@ class Button:
 
 # Draws window depending on different game states
 def redrawWindow(win, game, p):
+
     win.fill((250,229,212))
 
     # Waiting on another player to connect
@@ -46,6 +47,20 @@ def redrawWindow(win, game, p):
         text = font.render("Waiting for opponent...", 1, (121,173,29))
         win.blit(text, (50,200))
     else: # 2 players connected, ready to play
+        #font = pygame.font.SysFont("georgia", 30)
+        #text_p1 = font.render(f"Player 1 Wins: {game.wins[0]}", 1, (79, 184, 157))
+        #text_p2 = font.render(f"Player 2 Wins: {game.wins[1]}", 1, (79, 184, 157))
+        #text_ties = font.render(f"Ties: {game.ties}", 1, (79, 184, 157))
+
+        # Position for Player 1 Wins text
+        #win.blit(text_p1, (50, 50))
+
+        # Position for Ties text
+        #win.blit(text_ties, (width // 2 - text_ties.get_width() // 2, 50))
+
+        # Position for Player 2 Wins text
+        #win.blit(text_p2, (width - text_p2.get_width() - 50, 50))
+
         font = pygame.font.SysFont("georgia", 60)
         text = font.render("You", 1, (35,186,196))
         win.blit(text, (80, 200))
@@ -83,6 +98,7 @@ def redrawWindow(win, game, p):
         for btn in btns:
             btn.draw(win)
 
+
     pygame.display.update()
 
 # Make the buttons for each move option
@@ -95,10 +111,10 @@ def main():
     clock = pygame.time.Clock()
     n = Network()
     player = int(n.getP())
-    print("You are player", player)
+    print("You are player", (player + 1))
 
     while run:
-        clock.tick(60)
+        clock.tick(60) # 60 FPS
         try:
             game = n.send("get")
         except Exception as e:
@@ -116,15 +132,17 @@ def main():
                 print("Couldn't get game")
                 break
 
+            test = game.winner()
             font = pygame.font.SysFont("georgia", 90)
-            if (game.winner() == 1 and player == 1) or (game.winner() == 0 and player == 0):
+            if (test == 1 and player == 1) or (test == 0 and player == 0):
                 text = font.render("You Won!", 1, (41,214,64))
-            elif game.winner() == -1:
+            elif test == -1:
                 text = font.render("Tie Game!", 1, (163,100,196))
             else:
                 text = font.render("You Lost...", 1, (171,29,55))
 
             win.blit(text, (width/2 - text.get_width()/2, height/2 - text.get_height()/2))
+
             pygame.display.update()
             pygame.time.delay(2000)
 
@@ -145,6 +163,7 @@ def main():
                                 n.send(btn.text)
 
         redrawWindow(win, game, player)
+
 
 # Main menu, what players see first when game opened
 def menu_screen():
